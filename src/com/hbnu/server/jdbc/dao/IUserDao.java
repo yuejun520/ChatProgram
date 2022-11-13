@@ -1,6 +1,6 @@
-package com.hbnu.jdbc.dao;
+package com.hbnu.server.jdbc.dao;
 
-import com.hbnu.jdbc.vo.User;
+import com.hbnu.server.jdbc.vo.User;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ public interface IUserDao {
     public boolean doInsert(User u) throws Exception;
 
     public boolean doUpdate(User u) throws Exception;
+
+    public boolean doUpdateId(User u, int id) throws Exception;
 
     public boolean doDelete(User u) throws Exception;
 

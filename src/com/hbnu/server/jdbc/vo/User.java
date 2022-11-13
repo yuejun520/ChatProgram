@@ -1,4 +1,4 @@
-package com.hbnu.jdbc.vo;
+package com.hbnu.server.jdbc.vo;
 
 import java.util.Arrays;
 

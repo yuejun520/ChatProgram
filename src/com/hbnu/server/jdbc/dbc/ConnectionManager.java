@@ -1,4 +1,4 @@
-package com.hbnu.jdbc.dbc;
+package com.hbnu.server.jdbc.dbc;
 
 
 import java.io.FileInputStream;

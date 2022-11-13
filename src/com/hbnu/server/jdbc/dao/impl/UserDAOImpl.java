@@ -1,8 +1,8 @@
-package com.hbnu.jdbc.dao.impl;
+package com.hbnu.server.jdbc.dao.impl;
 
-import com.hbnu.jdbc.dao.IUserDao;
-import com.hbnu.jdbc.dbc.ConnectionManager;
-import com.hbnu.jdbc.vo.User;
+import com.hbnu.server.jdbc.dao.IUserDao;
+import com.hbnu.server.jdbc.dbc.ConnectionManager;
+import com.hbnu.server.jdbc.vo.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +38,7 @@ public class UserDAOImpl implements IUserDao {
             if (pstmt.executeUpdate() > 0)
                 flag = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            flag = false;
         } finally {
             ConnectionManager.release(pstmt, conn);
         }
@@ -67,7 +67,7 @@ public class UserDAOImpl implements IUserDao {
             if (pstmt.executeUpdate() > 0)
                 flag = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            flag = false;
         } finally {
             ConnectionManager.release(pstmt, conn);
         }
@@ -75,8 +75,37 @@ public class UserDAOImpl implements IUserDao {
     }
 
     @Override
-    public boolean doDelete(User u) throws Exception {
+    public boolean doUpdateId(User u, int id) throws Exception {
         boolean flag = false;
+        String sql = "update users set id=?, name=?, password=?," +
+                "introduction=?,security_question=?,classif" +
+                "ied_answer=?,head_portrait=? where id=?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = ConnectionManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, u.getId());
+            pstmt.setString(2, u.getName());
+            pstmt.setString(3, u.getPassword());
+            pstmt.setString(4, u.getIntroduction());
+            pstmt.setString(5, u.getSecurityQuestion());
+            pstmt.setString(6, u.getClassifiedAnswer());
+            pstmt.setBytes(7, u.getHeadPortrait());
+            pstmt.setInt(8, id);
+            if (pstmt.executeUpdate() > 0)
+                flag = true;
+        } catch (Exception e) {
+            flag = false;
+        } finally {
+            ConnectionManager.release(pstmt, conn);
+        }
+        return flag;
+    }
+    @Override
+    public boolean doDelete(User u) throws Exception {
+        boolean flag = true;
         String sql = "delete from users where id=?";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -85,9 +114,9 @@ public class UserDAOImpl implements IUserDao {
             conn = ConnectionManager.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, u.getId());
-            flag = true;
+            pstmt.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            flag = false;
         } finally {
             ConnectionManager.release(pstmt, conn);
         }
