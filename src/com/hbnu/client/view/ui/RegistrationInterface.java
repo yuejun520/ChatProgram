@@ -106,6 +106,7 @@ public class RegistrationInterface extends JFrame {
                 JFileChooser jfc = new JFileChooser();
                 jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 jfc.setFileFilter(new FileNameExtensionFilter("image(*.jpg)", "jpg"));
+                jfc.setCurrentDirectory(new File("images/"));
                 int result = jfc.showOpenDialog(Client.jf);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File file = jfc.getSelectedFile();
@@ -166,6 +167,7 @@ public class RegistrationInterface extends JFrame {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                headPortrait = account.getHeadPortrait();
                 data.put("username", username);
                 data.put("name", account.getName());
                 data.put("password", password);

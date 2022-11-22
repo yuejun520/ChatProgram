@@ -93,6 +93,8 @@ public class Communication implements Runnable {
                 Client.jf.dispose();
                 Client.jf = new MainInterface();
                 MainInterface.setUser(username, password);
+            } else if (type == MsgType.GET_BACK_FAILED) {
+                JOptionPane.showMessageDialog(Client.jf, receiveParams.get("message"));
             } else if (type == MsgType.GET_USERNAME_SUCCESSFUL) {
                 data = (Map) receiveParams.get("data");
                 String username = (String) data.get("username");
@@ -123,7 +125,6 @@ public class Communication implements Runnable {
                 List<MsgObjectList> mols = (List<MsgObjectList>) data.get("list");
                 mols.removeIf(mol -> mol.getUsername().equals(HomeInterface.username));
                 HomeInterface.setOnlineDatas(mols);
-                System.out.println(data.get("list"));
                 OnlineManage.setOnlines();
             } else if (type == MsgType.GET_USER_INFO_SUCCESSFUL) {
                 data = (Map) receiveParams.get("data");

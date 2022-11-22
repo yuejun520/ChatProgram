@@ -84,6 +84,7 @@ public class MainInterface extends JFrame {
         registerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                跳转注册界面
                 Client.jf.dispose();
                 Client.jf = new RegistrationInterface();
             }
