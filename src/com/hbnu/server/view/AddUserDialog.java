@@ -105,6 +105,7 @@ public class AddUserDialog extends JDialog {
                 JFileChooser jfc = new JFileChooser();
                 jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 jfc.setFileFilter(new FileNameExtensionFilter("image(*.jpg)","jpg"));
+                jfc.setCurrentDirectory(new File("images/"));
                 int result = jfc.showOpenDialog(jf);
                 if(result == JFileChooser.APPROVE_OPTION) {
                     File file = jfc.getSelectedFile();

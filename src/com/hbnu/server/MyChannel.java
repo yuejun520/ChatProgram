@@ -111,14 +111,17 @@ public class MyChannel implements Runnable {
                     send(sendParams);
                 }
                 if (String.valueOf(user.getId()).equals(username) && user.getPassword().equals(password)) {
-                    List<MyChannel> logins = Server.loginChannels;
-                    for (MyChannel other : logins) {
-                        if (other.username.equals(username)) {
-                            sendParams.put("type", MsgType.LOGIN_OUT);
-                            sendParams.put("message", "您的账号在其他客户端登录");
-                            sendOther(sendParams);
-                            Server.loginChannels.remove(other);
+                    try {
+                        for (MyChannel other : Server.loginChannels) {
+                            if (other.username.equals(username)) {
+                                sendParams.put("type", MsgType.LOGIN_OUT);
+                                sendParams.put("message", "您的账号在其他客户端登录");
+                                sendOther(sendParams);
+                                Server.loginChannels.remove(other);
+                            }
                         }
+                    } catch (Exception e) {
+                        System.out.println("异地登录");
                     }
                     this.username = username;
                     this.user = user;
@@ -163,6 +166,7 @@ public class MyChannel implements Runnable {
                 } else {
                     sendParams.put("type", MsgType.GET_BACK_FAILED);
                     sendParams.put("message", "密保答案错误，请重试");
+                    send(sendParams);
                 }
             } else if (type == MsgType.GET_USERNAME_REQUEST) {
                 String username;
